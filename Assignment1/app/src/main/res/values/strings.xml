@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Assignment1</string>
+    <string name="title_register">등록</string>
+    <string name="title_list">확인</string>
+</resources>
