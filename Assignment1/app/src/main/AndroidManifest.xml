@@ -4,6 +4,7 @@
     package="com.assignment1">
 
     <application
+        android:name=".Assignment1"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
