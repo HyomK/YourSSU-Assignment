@@ -9,21 +9,21 @@ interface UserDao {
     suspend fun insert(user: User)
 
     @Query("DELETE FROM user_table WHERE id = :id")
-    fun deleteUser(vararg id: Int)
+    suspend fun deleteUser(vararg id: Int)
 
     @Query("DELETE FROM user_table")
-     fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM user_table")
     fun getAll(): LiveData<List<User>>
 
     @Query("SELECT * FROM user_table WHERE id = :id")
-    fun findUserWithId(vararg id : Int): User
+    suspend fun findUserWithId(vararg id : Int): User
 
     @Query("SELECT * FROM user_table WHERE name LIKE :search")
-    fun findUserWithName(vararg search: String): List<User>
+    suspend fun findUserWithName(vararg search: String): List<User>
 
     @Query("SELECT * FROM user_table WHERE phone LIKE :search")
-    fun findUserWithPhone(vararg search: String): List<User>
+    suspend fun findUserWithPhone(vararg search: String): List<User>
 
 }

@@ -4,6 +4,10 @@
         <variable
             name="viewModel"
             type="com.assignment1.ui.register.RegisterViewModel" />
+
+        <variable
+            name="uiState"
+            type="com.assignment1.ui.register.RegisterUiState" />
     </data>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -30,6 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="홍길동"
+                android:text="@{uiState.name}"
+                android:afterTextChanged="@{e->uiState.onNameChanged.invoke(e)}"
                 />
             <TextView
                 android:id="@+id/fr_register_phone_tv"
@@ -45,14 +51,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="010-XXXX-XXXX"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:text="@{uiState.phone}"
+                android:afterTextChanged="@{e->uiState.onPhoneChanged.invoke(e)}"
                 />
             <Button
                 android:id="@+id/fr_register_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:onClick="@{_->viewModel.addProfile()}"
                 android:text="등록"
+                android:onClick="@{_->uiState.onSubmit.invoke()}"
                 />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
