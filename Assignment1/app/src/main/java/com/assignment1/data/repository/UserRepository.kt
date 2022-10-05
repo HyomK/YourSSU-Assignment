@@ -41,13 +41,8 @@ class UserRepository(private val userDataSource : UserDao) {
         return userDataSource.findUserWithId(id)
     }
 
-    suspend fun findByName(name : String) :List<User> {
-        return userDataSource.findUserWithName(name)
+    suspend fun searchUser(search : String) :List<User> {
+        return userDataSource.findUser(search)
     }
-
-    suspend fun findByPhone(phone: String) :List<User>{
-        return userDataSource.findUserWithPhone(phone)
-    }
-
 
 }

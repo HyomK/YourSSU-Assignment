@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
 
-        val repository = UserRepository(UserDatabase.getInstance(this).userDao()!!)
-
         initNavBar()
     }
 

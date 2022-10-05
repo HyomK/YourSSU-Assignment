@@ -2,6 +2,7 @@ package com.assignment1.ui.register
 
 import android.content.Context
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -48,6 +49,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
+        binding.frRegisterPhoneEt.addTextChangedListener(PhoneNumberFormattingTextWatcher())
     }
 
     private fun setObserver(){

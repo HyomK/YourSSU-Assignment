@@ -7,32 +7,39 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.assignment1.data.database.User
 import com.assignment1.databinding.ItemUserIlstBinding
+import com.google.android.material.snackbar.Snackbar
 
-class ListAdapter : ListAdapter<User,com.assignment1.ui.list.ListAdapter.ViewHolder>(UserDiffCallback()){
+class ListAdapter( val onClickDelete:(user: User)-> Unit): ListAdapter<User,com.assignment1.ui.list.ListAdapter.ViewHolder>(UserDiffCallback()){
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item,position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+         val layoutInflater = LayoutInflater.from(parent.context)
+         val binding = ItemUserIlstBinding.inflate(layoutInflater, parent, false)
+         return ViewHolder(binding)
     }
 
-     class ViewHolder private constructor(val binding: ItemUserIlstBinding)
+     inner class ViewHolder(val binding: ItemUserIlstBinding)
         : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: User) {
+        fun bind(item: User,pos: Int) {
             binding.user = item
             binding.executePendingBindings()
-        }
-
-        companion object {
-            fun from(parent: ViewGroup): ViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemUserIlstBinding.inflate(layoutInflater, parent, false)
-                return ViewHolder(binding)
+            binding.itemUserListDeleteBtn.setOnClickListener {
+                onClickDelete(item)
+                removeItem(pos)
             }
         }
     }
+
+    fun removeItem(pos: Int){
+        val newList = mutableListOf<User>()
+        newList.addAll(currentList)
+        newList.removeAt(pos)
+        submitList(newList)
+    }
+
 }
 
 class UserDiffCallback : DiffUtil.ItemCallback<User>() {

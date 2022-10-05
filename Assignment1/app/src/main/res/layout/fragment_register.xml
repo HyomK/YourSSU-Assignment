@@ -52,10 +52,12 @@
                 android:layout_height="wrap_content"
                 android:hint="010-XXXX-XXXX"
                 android:singleLine="true"
+                android:inputType="phone"
+                android:maxLength="13"
                 android:imeOptions="actionDone"
                 android:text="@{uiState.phone}"
                 android:afterTextChanged="@{e->uiState.onPhoneChanged.invoke(e)}"
-                />
+            />
             <Button
                 android:id="@+id/fr_register_btn"
                 android:layout_width="wrap_content"

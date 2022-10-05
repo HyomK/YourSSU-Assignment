@@ -23,10 +23,7 @@ interface UserDao {
     @Query("SELECT * FROM user_table WHERE id = :id")
     suspend fun findUserWithId(vararg id : Int): User
 
-    @Query("SELECT * FROM user_table WHERE name LIKE :search")
-    suspend fun findUserWithName(vararg search: String): List<User>
-
-    @Query("SELECT * FROM user_table WHERE phone LIKE :search")
-    suspend fun findUserWithPhone(vararg search: String): List<User>
+    @Query("SELECT * FROM user_table WHERE name = :search or phone = :search")
+    suspend fun findUser(vararg search: String): List<User>
 
 }
