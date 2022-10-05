@@ -12,6 +12,7 @@ class UserRepository(private val userDataSource : UserDao) {
 
 
     suspend fun addUser(name: String,phone: String){
+
         if(readAllData.value.isNullOrEmpty())
             return userDataSource.insert(User(0,name,phone))
         else readAllData.value?.let {
@@ -28,8 +29,12 @@ class UserRepository(private val userDataSource : UserDao) {
         userDataSource.deleteUser(id)
     }
 
-    suspend fun getUsers(): LiveData<List<User>>{
+    fun getUsers(): LiveData<List<User>>{
         return userDataSource.getAll()
+    }
+
+    suspend fun list() : List<User>{
+        return userDataSource.getAllByList()
     }
 
     suspend fun getUser(id : Int):User{

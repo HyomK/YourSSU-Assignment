@@ -40,6 +40,7 @@ android {
         enabled = true
     }
    //configurations { implementation.exclude group: 'org.jetbrains', module: 'annotations' }
+
 }
 
 

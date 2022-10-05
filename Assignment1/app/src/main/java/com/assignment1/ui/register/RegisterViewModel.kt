@@ -23,10 +23,12 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
     private val _uiState = MutableStateFlow(createState())
     val uiState get() = _uiState.asStateFlow()
 
-    val context = getApplication<Application>().applicationContext
+    val userList = MutableLiveData<List<User>>(emptyList())
+
 
     init {
-        repository = UserRepository(UserDatabase.getInstance(context)!!.userDao())
+        repository = UserRepository(UserDatabase.getInstance(application.applicationContext)!!.userDao())
+        loadList()
     }
 
     private fun createState() : RegisterUiState{
@@ -37,6 +39,13 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
             onPhoneChanged = ::handlePhoneChanged,
             onSubmit = ::addUser
         )
+    }
+
+    private fun loadList(){
+        viewModelScope.launch {
+            userList.value = repository.readAllData.value
+        }
+
     }
 
      private fun addUser(){
@@ -58,14 +67,13 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
         }
     }
 
+
     private fun handleNameChanged(text: Editable?) {
         _uiState.update { it.copy(name = text.toString()) }
-        Log.e("register","change name ${text.toString()}")
     }
 
     private fun handlePhoneChanged(text: Editable?) {
         _uiState.update { it.copy(phone = text.toString()) }
-        Log.e("register","change phone ${text.toString()}")
     }
 
      fun consumeEvent(viewEvent: RegisterViewEvent) {

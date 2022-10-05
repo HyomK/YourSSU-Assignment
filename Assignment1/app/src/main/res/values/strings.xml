@@ -2,4 +2,7 @@
     <string name="app_name">Assignment1</string>
     <string name="title_register">등록</string>
     <string name="title_list">확인</string>
+
+    <string name="item_name">이름: %s</string>
+    <string name="item_phone">번호: %s</string>
 </resources>

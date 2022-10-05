@@ -17,6 +17,9 @@ interface UserDao {
     @Query("SELECT * FROM user_table")
     fun getAll(): LiveData<List<User>>
 
+    @Query("SELECT * FROM user_table")
+    fun getAllByList(): List<User>
+
     @Query("SELECT * FROM user_table WHERE id = :id")
     suspend fun findUserWithId(vararg id : Int): User
 
