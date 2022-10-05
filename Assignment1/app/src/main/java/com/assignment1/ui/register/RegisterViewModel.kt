@@ -1,9 +1,11 @@
 package com.assignment1.ui.register
 
 import android.app.Application
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.*
+import com.assignment1.RegexConstant
 import com.assignment1.data.database.User
 import com.assignment1.data.database.UserDatabase
 import com.assignment1.data.repository.UserRepository
@@ -23,12 +25,8 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
     private val _uiState = MutableStateFlow(createState())
     val uiState get() = _uiState.asStateFlow()
 
-    val userList = MutableLiveData<List<User>>(emptyList())
-
-
     init {
         repository = UserRepository(UserDatabase.getInstance(application.applicationContext)!!.userDao())
-        loadList()
     }
 
     private fun createState() : RegisterUiState{
@@ -41,18 +39,12 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
         )
     }
 
-    private fun loadList(){
-        viewModelScope.launch {
-            userList.value = repository.readAllData.value
-        }
-
-    }
 
      private fun addUser(){
-        Log.e("submit","add ...")
         CoroutineScope(Dispatchers.Default).launch {
             if(uiState.value.isEnabled){
-                _viewEvents.update{ it + RegisterViewEvent.Failure("입력 값을 확인해 주세요") }
+                _viewEvents.update{ it + RegisterViewEvent.Failure(
+                    uiState.value.phoneNumberErrorReason?:"입력 값을 확인해 주세요") }
                 return@launch
             }
             try{
@@ -76,7 +68,7 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
         _uiState.update { it.copy(phone = text.toString()) }
     }
 
-     fun consumeEvent(viewEvent: RegisterViewEvent) {
+    fun consumeEvent(viewEvent: RegisterViewEvent) {
         _viewEvents.update{it - viewEvent}
     }
 
@@ -94,5 +86,8 @@ data class RegisterUiState(
     val onPhoneChanged: (Editable?) -> Unit,
     val onSubmit: () -> Unit,
 ) {
-    val isEnabled = name.isNullOrEmpty() && phone.isNullOrEmpty()
+    val phoneNumberErrorReason =
+        if (RegexConstant.PHONE_REGEX.matches(phone)) null
+        else "올바른 휴대폰 번호를 입력해주세요."
+    val isEnabled = !name.isNullOrEmpty() && !phoneNumberErrorReason.isNullOrEmpty()
 }
