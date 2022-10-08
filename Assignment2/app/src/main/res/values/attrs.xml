@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <declare-styleable name="SSUInputField">-->
+<!--        <attr name="ssu_text" format="string" />-->
+<!--        <attr name="ssu_hint" format="string"/>-->
+<!--        <attr name="state" format="string" />-->
+<!--        <attr name="error"  format="string" />-->
+<!--        <attr name="label_textColor" format="color" />-->
+
+
+<!--    </declare-styleable>-->
+
+    <declare-styleable name="SSUComponentTextField">
+        <attr name="ssu_state" format="string" />
+        <attr name="ssu_helper_message" format="string" />
+        <attr name="ssu_option" format="string" />
+        <attr name="ssuBorderWidth" format="dimension" />
+        <attr name="ssuBackgroundColor" format="color" />
+    </declare-styleable>
+
+
+    <attr name="state_error" format="boolean" />
+
+</resources>
