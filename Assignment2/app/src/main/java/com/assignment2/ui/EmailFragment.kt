@@ -1,19 +1,14 @@
 package com.assignment2.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.assignment2.MainActivity
 import com.assignment2.R
 import com.assignment2.databinding.FragmentEmailBinding
 
@@ -42,7 +37,7 @@ class EmailFragment : Fragment() {
 
     private fun initView(){
         binding.frEmailNextBtn.isEnabled = false
-        binding.inputField.getEditText?.addTextChangedListener {  viewModel.handleInput(it) }
+        binding.inputField.getEditText?.addTextChangedListener {  viewModel.handleEmail(it) }
         binding.frEmailNextBtn.setOnClickListener {
             findNavController().navigate(R.id.action_emailFragment_to_passwordFragment)
         }

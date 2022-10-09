@@ -1,17 +1,15 @@
 package com.assignment2.ui
 
 import android.text.Editable
-import android.util.Log
-import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.io.Serializable
 
 class EmailViewModel : ViewModel() , Serializable {
-    private val _uiState = MutableLiveData(EmailUiState(onEmailChanged=::handleInput))
+    private val _uiState = MutableLiveData(EmailUiState(onEmailChanged=::handleEmail))
     val uistate get() = _uiState
 
-    fun handleInput(editText: Editable?){
+    fun handleEmail(editText: Editable?){
         _uiState.postValue(_uiState.value?.copy(input = editText.toString()))
     }
 
