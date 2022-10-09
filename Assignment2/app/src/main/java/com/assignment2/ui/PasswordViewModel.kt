@@ -3,6 +3,7 @@ package com.assignment2.ui
 import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.assignment2.util.RegexConstants
@@ -10,7 +11,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class PasswordViewModel : ViewModel() {
+class PasswordViewModel(): ViewModel() {
+
     private val _uiState = MutableLiveData(PasswordUiState(onEmailChanged=::handlePassword))
     val uistate get() = _uiState
 
