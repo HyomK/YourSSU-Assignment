@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Assignment2</string>
     <string name="email_description">숭실대학교 메일을 입력해 주세요.</string>
-    <string name="password_description">숫자와 영문자 조합으로 8자 이상 입력해 주세요.</string>
+    <string name="password_description">사용할 비밀번호를 입력해주세요.</string>
+    <string name="password_helper">숫자와 영문자 조합으로 8자 이상 입력해 주세요.</string>
     <string name ="ssu_email">@soongsil.ac.kr</string>
 </resources>

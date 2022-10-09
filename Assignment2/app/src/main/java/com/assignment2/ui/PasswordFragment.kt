@@ -6,27 +6,37 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.assignment2.R
+import com.assignment2.databinding.FragmentEmailBinding
+import com.assignment2.databinding.FragmentPasswordBinding
 
 class PasswordFragment : Fragment() {
+    private var _binding : FragmentPasswordBinding? = null
 
-    companion object {
-        fun newInstance() = PasswordFragment()
-    }
+    private val binding get() = _binding!!
 
-    private lateinit var viewModel: PasswordViewModel
+    private val viewModel by activityViewModels<PasswordViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_password, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_password, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PasswordViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.frPwdInputField.getEditText?.addTextChangedListener {
+            viewModel.handlePassword(it)
+        }
     }
 
 }

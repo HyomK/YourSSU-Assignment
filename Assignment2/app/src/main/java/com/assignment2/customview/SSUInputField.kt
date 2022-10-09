@@ -52,7 +52,7 @@ class SSUInputField @JvmOverloads constructor(
 
             /** 도움말 **/
             val helper = getString(R.styleable.SSUComponentTextField_ssu_helper_message)
-            if(state=="error") binding.txtHelper.setTextColor(ColorStateList.valueOf(tint))
+
             if(!helper.isNullOrBlank()){
                 binding.txtHelper.isVisible = true
                 binding.txtHelper.text = helper
@@ -88,12 +88,20 @@ class SSUInputField @JvmOverloads constructor(
     fun setState(state : String){
         with(binding){
             val stateColor = when(state){
-                "error" -> com.assignment2.R.color.text_warned
-                "success"-> com.assignment2.R.color.text_pointed
-                else -> com.assignment2.R.color.text_default
+                "error" -> R.color.text_warned
+                "success"-> R.color.text_pointed
+                else -> R.color.transparent
             }
             val tint =ContextCompat.getColor(context,stateColor)
-            if(state=="error") binding.txtHelper.setTextColor(tint)
+            txtHelper.setTextColor(
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(context,
+                        when(state){
+                            "error" -> R.color.text_warned
+                            else -> R.color.text_tertiary
+                        }
+                    )
+                ))
             val borderColor = ColorStateList.valueOf(tint)
             val backgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context,R.color.bg_input))
             val gradientDrawable = GradientDrawable().apply {
