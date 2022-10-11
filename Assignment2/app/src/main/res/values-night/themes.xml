@@ -12,10 +12,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
+        <item name="android:textViewStyle">@style/robotoTextView</item>
     </style>
     <style name="EditTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/text_pointed</item>
         <item name="colorControlNormal">@color/text_pointed</item>
+    </style>
+
+    <style name="robotoTextView" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/font</item>
     </style>
 </resources>
