@@ -10,7 +10,9 @@ class EmailViewModel : ViewModel() , Serializable {
     val uistate get() = _uiState
 
     fun handleEmail(editText: Editable?){
-        _uiState.postValue(_uiState.value?.copy(input = editText.toString()))
+        _uiState.postValue(_uiState.value?.copy(
+            input = editText.toString().replace(" ","")
+        ))
     }
 
     data class EmailUiState(

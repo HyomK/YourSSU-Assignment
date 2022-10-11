@@ -22,7 +22,9 @@ class PasswordViewModel(): ViewModel() {
 
         passwordValidationJob = viewModelScope.launch {
             delay(300L)
-            _uiState.postValue(_uiState.value?.copy(input = editText.toString()))
+            _uiState.postValue(_uiState.value?.copy(
+                input = editText.toString().replace(" ",""))
+            )
         }
     }
 
