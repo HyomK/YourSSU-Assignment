@@ -17,12 +17,14 @@
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ssu_et"
+                android:theme="@style/EditTheme"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:layout_marginLeft="16dp"
                 android:singleLine="true"
                 android:background="@android:color/transparent"
+                android:inputType="textNoSuggestions|textVisiblePassword"
                 android:textSize="15sp"
                 />
             <RelativeLayout
