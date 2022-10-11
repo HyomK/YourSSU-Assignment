@@ -1,4 +1,4 @@
-package com.assignment1.ui.list
+package com.assignment1.ui.list.adapter
 
 import android.graphics.Canvas
 import android.view.View
@@ -6,6 +6,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior.getTag
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
+import com.assignment1.ui.list.ListAdapter
 import java.lang.Math.max
 import java.lang.Math.min
 

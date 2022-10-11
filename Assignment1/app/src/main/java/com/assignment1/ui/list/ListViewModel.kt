@@ -31,13 +31,17 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    private var searchValidationJob : Job? = null
     fun handleSearchChanged(text: Editable?) {
-        viewModelScope.launch(Dispatchers.IO) {
+        searchValidationJob?.cancel()
+
+        searchValidationJob = viewModelScope.launch(Dispatchers.IO) {
+            delay(300L)
             if(text.isNullOrBlank()){
                 _uiState.update { it.copy(search="",result = repository.list()) }
                 return@launch
             }
-            val res = repository.searchUser(text.toString())
+            val res = repository.searchUser("%${text}%")
             _uiState.update { it.copy(result = res, search = text.toString()) }
         }
     }

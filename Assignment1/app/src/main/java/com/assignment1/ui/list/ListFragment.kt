@@ -17,6 +17,7 @@ import com.assignment1.R
 import com.assignment1.data.database.User
 import com.assignment1.databinding.FragmentListBinding
 import com.assignment1.ui.list.adapter.ItemDecoration
+import com.assignment1.ui.list.adapter.SwipeHelperCallback
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
