@@ -42,18 +42,18 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
 
      private fun addUser(){
         CoroutineScope(Dispatchers.Default).launch {
-            if(uiState.value.isEnabled){
+            if(!uiState.value.errorReason.isNullOrBlank()){
                 _viewEvents.update{ it + RegisterViewEvent.Failure(
-                    uiState.value.phoneNumberErrorReason?:"입력 값을 확인해 주세요") }
+                    uiState.value.errorReason!!) }
                 return@launch
             }
             try{
                 repository.addUser(uiState.value.name, uiState.value.phone)
                 _uiState.update { it.copy(name="", phone = "") }
                 _viewEvents.update{ it + RegisterViewEvent.Success }
+
             }catch(error: Throwable){
                 _viewEvents.update{ it + RegisterViewEvent.Failure("등록 실패!") }
-                Log.e("error!!", error.message.toString(),error)
                 return@launch
             }
         }
@@ -65,6 +65,7 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
     }
 
     private fun handlePhoneChanged(text: Editable?) {
+        Log.e("handle",RegexConstant.PHONE_REGEX.matches(text.toString()).toString())
         _uiState.update { it.copy(phone = text.toString()) }
     }
 
@@ -86,8 +87,9 @@ data class RegisterUiState(
     val onPhoneChanged: (Editable?) -> Unit,
     val onSubmit: () -> Unit,
 ) {
-    val phoneNumberErrorReason =
-        if (RegexConstant.PHONE_REGEX.matches(phone)) null
+    val errorReason =
+        if (!name.isNullOrEmpty() && RegexConstant.PHONE_REGEX.matches(phone)) null
+        else if(name.isNullOrEmpty()) "이름을 입력해 주세요."
         else "올바른 휴대폰 번호를 입력해주세요."
-    val isEnabled = !name.isNullOrEmpty() && !phoneNumberErrorReason.isNullOrEmpty()
+    val isEnabled = !name.isNullOrEmpty() && phone.length==13
 }

@@ -17,7 +17,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="80dp"
+            android:paddingHorizontal="40dp"
+            android:paddingTop="100dp"
             android:gravity="center"
             android:orientation="vertical"
             >
@@ -25,16 +26,22 @@
                 android:id="@+id/fr_register_name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:textAlignment="viewStart"
+                android:textSize="16sp"
                 android:text="이름"
                 />
             <EditText
                 android:id="@+id/fr_register_name_et"
+                android:theme="@style/EditTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:hint="홍길동"
+                android:background="@drawable/textfield_bg"
                 android:text="@{uiState.name}"
+                android:textSize="16sp"
+                android:textColor="@color/navy"
                 android:afterTextChanged="@{e->uiState.onNameChanged.invoke(e)}"
                 />
             <TextView
@@ -42,28 +49,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:textAlignment="center"
-                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:textAlignment="viewStart"
+                android:textSize="16sp"
                 android:text="전화번호"
                 />
             <EditText
                 android:id="@+id/fr_register_phone_et"
+                android:theme="@style/EditTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/textfield_bg"
                 android:hint="010-XXXX-XXXX"
                 android:singleLine="true"
                 android:inputType="phone"
                 android:maxLength="13"
                 android:imeOptions="actionDone"
                 android:text="@{uiState.phone}"
+                android:textSize="16sp"
+                android:textColor="@color/navy"
                 android:afterTextChanged="@{e->uiState.onPhoneChanged.invoke(e)}"
             />
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/fr_register_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/register_btn_bg"
                 android:text="등록"
+                android:textSize="16sp"
+                android:textColor="@color/white"
                 android:onClick="@{_->uiState.onSubmit.invoke()}"
                 />
         </androidx.appcompat.widget.LinearLayoutCompat>

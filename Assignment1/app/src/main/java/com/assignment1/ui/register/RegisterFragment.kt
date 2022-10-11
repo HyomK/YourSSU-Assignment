@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -32,8 +33,7 @@ class RegisterFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val registerViewModel by lazy {
-        ViewModelProvider(activity as MainActivity).get(RegisterViewModel::class.java) }
+    private val registerViewModel by viewModels<RegisterViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,15 +69,13 @@ class RegisterFragment : Fragment() {
             event ->
                 when(event){
                     is RegisterViewEvent.Success->{
-                        (context as MainActivity).run {
-                            hideKeyBoard(binding.frRegisterPhoneEt)
-                            Toast.makeText(this,"등록되었습니다",Toast.LENGTH_SHORT).show()
-                        }
+                        Toast.makeText( (context as MainActivity),"등록되었습니다",Toast.LENGTH_SHORT).show()
                     }
                     is RegisterViewEvent.Failure->{
                         Toast.makeText((context as MainActivity),event.msg,Toast.LENGTH_SHORT).show()
                     }
                 }
+            requireContext().hideKeyBoard(binding.frRegisterPhoneEt)
             registerViewModel.consumeEvent(event)
         }
     }
@@ -86,8 +84,6 @@ class RegisterFragment : Fragment() {
         val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(edittext.windowToken,   0)
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

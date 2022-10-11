@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:orientation="horizontal"
-            android:weightSum="4">
+            android:weightSum=" 7">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,20 +24,32 @@
                 android:id="@+id/item_user_list_delete_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#fc6944"
+                android:background="@color/orange"
                 android:layout_weight="3"
                 android:gravity="center"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:gravity="center"
                     android:src="@drawable/ic_baseline_delete_24"
                     />
             </RelativeLayout>
-
-
+            <RelativeLayout
+                android:id="@+id/item_user_list_edit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/yellow"
+                android:layout_weight="3"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:src="@drawable/ic_baseline_delete_24"
+                    />
+            </RelativeLayout>
 
         </LinearLayout>
 

@@ -27,6 +27,7 @@ class ListFragment : Fragment(){
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<ListViewModel>()
+    private var userAdapter : ListAdapter ? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,14 +42,17 @@ class ListFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userAdapter = ListAdapter(::onClickDeleteItem)
+        userAdapter = ListAdapter(::onClickDeleteItem)
+        initView()
+        setObserver()
+    }
 
+    private fun initView(){
         val swipeHelperCallback = SwipeHelperCallback().apply {
-            setClamp(230f)
+            setClamp(300f)
         }
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.frListRv)
-
         binding.frListRv.apply{
             adapter = userAdapter
             setOnTouchListener { _, _ ->
@@ -57,15 +61,18 @@ class ListFragment : Fragment(){
             }
             addItemDecoration(ItemDecoration())
         }
+    }
+
+    private fun setObserver(){
         viewModel.uiState.flowWithLifecycle(lifecycle)
             .onEach {
                 binding.uiState=it
-                userAdapter.submitList(it.result)
+                userAdapter?.submitList(it.result)
             }
             .launchIn(lifecycleScope)
 
         viewModel.getUserList().observe(viewLifecycleOwner, Observer {
-            it?.let{ userAdapter.submitList(it) }
+            it?.let{ userAdapter?.submitList(it) }
         })
     }
 

@@ -24,17 +24,23 @@
             android:layout_marginHorizontal="20dp"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:theme="@style/EditTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="70"
+                android:padding="10dp"
                 android:hint="전화번호/이름 검색"
+                android:background="@drawable/textfield_bg"
                 android:singleLine="true"
                 android:afterTextChanged="@{e->uiState.onSearchChanged.invoke(e)}"
                 android:text="@{uiState.search}"
+                android:textSize="16sp"
+                android:textColor="@color/navy"
                 />
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:padding="10dp"
                 android:src="@drawable/ic_baseline_autorenew_24"
                 android:onClick="@{_->viewModel.initSearchBar()}"
                 android:background="@android:color/transparent"
