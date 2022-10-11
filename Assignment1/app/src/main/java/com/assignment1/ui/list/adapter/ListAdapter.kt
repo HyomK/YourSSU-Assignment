@@ -21,6 +21,10 @@ class ListAdapter( val onClickDelete:(user: User)-> Unit): ListAdapter<User,com.
          return ViewHolder(binding)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
      inner class ViewHolder(val binding: ItemUserIlstBinding)
         : RecyclerView.ViewHolder(binding.root){
         fun bind(item: User,pos: Int) {
@@ -36,7 +40,7 @@ class ListAdapter( val onClickDelete:(user: User)-> Unit): ListAdapter<User,com.
     fun removeItem(pos: Int){
         val newList = mutableListOf<User>()
         newList.addAll(currentList)
-        newList.removeAt(pos)
+        if(pos < newList.size)newList.removeAt(pos)
         submitList(newList)
     }
 
@@ -47,6 +51,6 @@ class UserDiffCallback : DiffUtil.ItemCallback<User>() {
         return oldItem.id == newItem.id
     }
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 }
