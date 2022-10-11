@@ -11,6 +11,7 @@
 
     <color name="text_default">#8E9398</color>
     <color name="text_primary">#252729</color>
+    <color name="text_secondary">#252729</color>
     <color name="text_pointed">#00A3FF</color>
     <color name="text_warned">#FF5252</color>
     <color name="text_tertiary">#8E9398</color>

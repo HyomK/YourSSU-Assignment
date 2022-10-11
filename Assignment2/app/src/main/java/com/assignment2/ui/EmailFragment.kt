@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.assignment2.Assignment2
 import com.assignment2.R
 import com.assignment2.databinding.FragmentEmailBinding
-import com.assignment2.util.PreferenceManager
 
 class EmailFragment : Fragment() {
 
@@ -20,7 +19,7 @@ class EmailFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val viewModel by activityViewModels<EmailViewModel>()
+    private val viewModel by viewModels<EmailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +37,12 @@ class EmailFragment : Fragment() {
     }
 
     private fun initView(){
+        binding.frEmailToolbar.toolbarBackBtn.visibility = View.INVISIBLE
+
         binding.frEmailNextBtn.isEnabled = false
+
         binding.inputField.getEditText?.addTextChangedListener {  viewModel.handleEmail(it) }
+
         binding.frEmailNextBtn.setOnClickListener {
             Assignment2.preferences.setEmail(viewModel.uistate.value!!.input!!)
             findNavController().navigate(R.id.action_emailFragment_to_passwordFragment)

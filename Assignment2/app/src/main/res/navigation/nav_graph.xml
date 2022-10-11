@@ -22,10 +22,17 @@
         <action
             android:id="@+id/action_passwordFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
+        <action
+            android:id="@+id/action_passwordFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.assignment2.ui.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" />
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+    </fragment>
 </navigation>
