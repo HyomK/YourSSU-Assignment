@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.assignment1.ui.list.EditDialogViewModel" />
+
+        <variable
+            name="uiState"
+            type="com.assignment1.ui.list.EditDialogViewModel.EditUiState" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:text="이름"
+            />
+        <EditText
+            android:id="@+id/fr_edit_username"
+            android:theme="@style/EditTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:padding="10dp"
+            android:background="@drawable/textfield_bg"
+            android:afterTextChanged="@{e->viewModel.uiState.onNameChanged.invoke(e)}"
+            android:text="@{viewModel.uiState.name}"
+             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="16dp"
+            android:text="전화번호"
+            />
+        <EditText
+            android:id="@+id/fr_edit_phone"
+            android:theme="@style/EditTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:background="@drawable/textfield_bg"
+            android:afterTextChanged="@{e->viewModel.uiState.onPhoneChanged.invoke(e)}"
+            android:text="@{viewModel.uiState.phone}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:gravity="end"
+            >
+            <Button
+                android:id="@+id/fr_edit_negative_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content"
+                android:text="취소"
+                android:background="@android:color/transparent"
+                android:textColor="@color/navy"
+                android:textSize="14sp"
+                />
+            <Button
+                android:id="@+id/fr_edit_positive_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="wrap_content"
+                android:text="수정"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/register_btn_bg"
+                android:enabled="@{uiState.enabled}"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

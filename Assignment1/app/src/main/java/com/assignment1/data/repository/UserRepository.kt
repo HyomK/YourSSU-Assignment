@@ -33,7 +33,7 @@ class UserRepository(private val userDataSource : UserDao) {
         return userDataSource.getAll()
     }
 
-    suspend fun list() : List<User>{
+    fun list() : List<User>{
         return userDataSource.getAllByList()
     }
 
@@ -44,5 +44,7 @@ class UserRepository(private val userDataSource : UserDao) {
     suspend fun searchUser(search : String) :List<User> {
         return userDataSource.findUser(search)
     }
+
+    suspend fun updateUser(user : User) = userDataSource.update(user)
 
 }

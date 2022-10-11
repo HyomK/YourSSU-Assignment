@@ -26,4 +26,6 @@ interface UserDao {
     @Query("SELECT * FROM user_table WHERE  name LIKE :search or phone LIKE :search")
     suspend fun findUser(vararg search: String): List<User>
 
+    @Update
+    suspend fun update(user: User)
 }

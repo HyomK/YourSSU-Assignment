@@ -1,12 +1,15 @@
 package com.assignment1.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.flowWithLifecycle
@@ -18,6 +21,7 @@ import com.assignment1.data.database.User
 import com.assignment1.databinding.FragmentListBinding
 import com.assignment1.ui.list.adapter.ItemDecoration
 import com.assignment1.ui.list.adapter.SwipeHelperCallback
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -40,9 +44,10 @@ class ListFragment : Fragment(){
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userAdapter = ListAdapter(::onClickDeleteItem)
+        userAdapter = ListAdapter(::onClickDeleteItem, ::onClickEditItem)
         initView()
         setObserver()
     }
@@ -72,7 +77,9 @@ class ListFragment : Fragment(){
             .launchIn(lifecycleScope)
 
         viewModel.getUserList().observe(viewLifecycleOwner, Observer {
-            it?.let{ userAdapter?.submitList(it) }
+            it?.let{
+                userAdapter?.submitList(it)
+            }
         })
     }
 
@@ -81,8 +88,17 @@ class ListFragment : Fragment(){
         Toast.makeText( (activity as MainActivity),"삭제되었습니다",Toast.LENGTH_SHORT).show()
     }
 
+    private fun onClickEditItem (user : User){
+        showEditDialog(user)
+    }
+    private fun showEditDialog(user : User) {
+        val dialog = EditDialogFragment.newInstance(requireContext(),user)
+        dialog.show(parentFragmentManager, "EditDialogFragment")
+    }
+
     override fun onDestroyView() {
             super.onDestroyView()
             _binding = null
     }
+
 }

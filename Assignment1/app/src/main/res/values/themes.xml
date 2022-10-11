@@ -17,4 +17,5 @@
         <item name="colorAccent">@color/dark_blue</item>
         <item name="colorControlNormal">@color/dark_blue</item>
     </style>
+
 </resources>

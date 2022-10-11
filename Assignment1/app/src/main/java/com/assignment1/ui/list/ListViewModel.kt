@@ -64,9 +64,9 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
 data class ListUiState(
     val search: String ="",
     val onSearchChanged: (Editable?) -> Unit,
-    var result: List<User> = emptyList<User>()
+    var result: List<User> = emptyList<User>(),
 ) {
-   val isEmptyState = search.isNotBlank()&&result.isNullOrEmpty()
+   val isEmptyState = search.isNotBlank()&& result.isNullOrEmpty()
 }
 
 

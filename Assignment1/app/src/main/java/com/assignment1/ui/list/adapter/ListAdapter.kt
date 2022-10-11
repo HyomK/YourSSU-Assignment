@@ -9,7 +9,10 @@ import com.assignment1.data.database.User
 import com.assignment1.databinding.ItemUserIlstBinding
 import com.google.android.material.snackbar.Snackbar
 
-class ListAdapter( val onClickDelete:(user: User)-> Unit): ListAdapter<User,com.assignment1.ui.list.ListAdapter.ViewHolder>(UserDiffCallback()){
+class ListAdapter(
+    val onClickDelete:(user: User)-> Unit,
+    val onClickEdit:(user: User)-> Unit
+    ): ListAdapter<User,com.assignment1.ui.list.ListAdapter.ViewHolder>(UserDiffCallback()){
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item,position)
@@ -34,6 +37,9 @@ class ListAdapter( val onClickDelete:(user: User)-> Unit): ListAdapter<User,com.
                 onClickDelete(item)
                 removeItem(pos)
             }
+            binding.itemUserListEditBtn.setOnClickListener {
+                onClickEdit(item)
+            }
         }
     }
 
@@ -48,7 +54,7 @@ class ListAdapter( val onClickDelete:(user: User)-> Unit): ListAdapter<User,com.
 
 class UserDiffCallback : DiffUtil.ItemCallback<User>() {
     override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.id == newItem.id && oldItem.name== newItem.name && oldItem.phone ==newItem.phone
     }
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
         return oldItem.id == newItem.id

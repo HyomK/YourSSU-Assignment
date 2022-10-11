@@ -1,6 +1,7 @@
 package com.assignment1.ui.list.adapter
 
 import android.graphics.Canvas
+import android.util.Log
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior.getTag
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -39,12 +40,12 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         currentDx = 0f
         getDefaultUIUtil().clearView(getView(viewHolder))
-        previousPosition = viewHolder.adapterPosition
+        previousPosition = viewHolder.itemViewType
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         viewHolder?.let {
-            currentPosition = viewHolder.adapterPosition
+            currentPosition = viewHolder.itemViewType
             getDefaultUIUtil().onSelected(getView(it))
         }
     }
@@ -95,10 +96,10 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
         isCurrentlyActive: Boolean
     ) : Float {
         // View의 가로 길이의 절반까지만 swipe 되도록
-        val min: Float = -view.width.toFloat()/3
+        val min: Float = -view.width.toFloat()/2
         // RIGHT 방향으로 swipe 막기
         val max: Float = 0f
-
+        clamp = view.width.toFloat()/7 * 2
         val x = if (isClamped) {
             // View가 고정되었을 때 swipe되는 영역 제한
             if (isCurrentlyActive) dX - clamp else -clamp
@@ -128,8 +129,10 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
     }
 
     fun removePreviousClamp(recyclerView: RecyclerView) {
-        if (currentPosition == previousPosition)
+        if (currentPosition == previousPosition ){
             return
+        }
+
         previousPosition?.let {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(it) ?: return
             getView(viewHolder).translationX = 0f
