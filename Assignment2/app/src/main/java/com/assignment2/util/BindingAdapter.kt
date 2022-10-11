@@ -1,4 +1,4 @@
-package com.assignment2
+package com.assignment2.util
 
 import androidx.databinding.BindingAdapter
 import com.assignment2.customview.SSUInputField

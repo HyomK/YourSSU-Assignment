@@ -26,6 +26,7 @@
                 android:background="@android:color/transparent"
                 android:inputType="textNoSuggestions|textVisiblePassword"
                 android:textSize="15sp"
+                android:textColor="@color/text_secondary"
                 />
             <RelativeLayout
                 android:id="@+id/ssu_et_option"

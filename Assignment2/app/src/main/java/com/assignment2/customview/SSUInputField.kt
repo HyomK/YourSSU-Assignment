@@ -43,12 +43,6 @@ class SSUInputField @JvmOverloads constructor(
             R.styleable.SSUComponentTextField,defStyleAttr, defStyleRes){
 
             val state = getString(R.styleable.SSUComponentTextField_ssu_state)
-            val colorId = when(state){
-                "error" -> R.color.text_warned
-                "success"-> R.color.text_pointed
-                else -> R.color.text_default
-            }
-            val tint =ContextCompat.getColor(context,colorId)
 
             /** 도움말 **/
             val helper = getString(R.styleable.SSUComponentTextField_ssu_helper_message)
@@ -70,7 +64,6 @@ class SSUInputField @JvmOverloads constructor(
                     binding.ssuEtDeleteIv.apply {
                         isVisible = true
                         setOnClickListener {
-                            Log.e("option","click!")
                             binding.ssuEt.text?.clear()
                         }
                     }

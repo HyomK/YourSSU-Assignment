@@ -12,7 +12,10 @@ import androidx.navigation.fragment.findNavController
 import com.assignment2.Assignment2
 import com.assignment2.R
 import com.assignment2.databinding.FragmentEmailBinding
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EmailFragment : Fragment() {
 
     private var _binding : FragmentEmailBinding? = null
@@ -44,7 +47,7 @@ class EmailFragment : Fragment() {
         binding.inputField.getEditText?.addTextChangedListener {  viewModel.handleEmail(it) }
 
         binding.frEmailNextBtn.setOnClickListener {
-            Assignment2.preferences.setEmail(viewModel.uistate.value!!.input!!)
+            viewModel.onClickNext()
             findNavController().navigate(R.id.action_emailFragment_to_passwordFragment)
         }
     }

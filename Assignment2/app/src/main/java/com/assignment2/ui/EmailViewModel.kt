@@ -3,11 +3,14 @@ package com.assignment2.ui
 import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.io.Serializable
+import com.assignment2.data.AccountRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class EmailViewModel : ViewModel() , Serializable {
+@HiltViewModel
+class EmailViewModel@Inject constructor(private val repository: AccountRepository): ViewModel(){
     private val _uiState = MutableLiveData(EmailUiState(onEmailChanged=::handleEmail))
-    val uistate get() = _uiState
+    val uiState get() = _uiState
 
     fun handleEmail(editText: Editable?){
         _uiState.postValue(_uiState.value?.copy(
@@ -15,9 +18,13 @@ class EmailViewModel : ViewModel() , Serializable {
         ))
     }
 
+    fun onClickNext(){
+        repository.setEmail(uiState.value!!.input!!)
+    }
+
     data class EmailUiState(
         val input : String? = "",
-        val onEmailChanged:(Editable?)->Unit
+        val onEmailChanged:(Editable?)->Unit,
     ){
         val isEnabled = !input.isNullOrBlank()
     }

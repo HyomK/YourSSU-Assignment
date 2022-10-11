@@ -62,7 +62,7 @@
                 android:textColor="@color/selector_btn_text"
                 android:text="다음"
                 android:layout_weight="0"
-                android:enabled="@{viewModel.uistate.isEnabled}"
+                android:enabled="@{viewModel.uiState.isEnabled}"
                 />
         </LinearLayout>
     </FrameLayout>

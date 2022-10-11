@@ -1,6 +1,5 @@
 package com.assignment2.ui
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.assignment2.Assignment2
 import com.assignment2.R
 import com.assignment2.databinding.FragmentPasswordBinding
-import com.assignment2.util.PreferenceManager
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PasswordFragment : Fragment() {
     private var _binding : FragmentPasswordBinding? = null
 
@@ -43,7 +43,7 @@ class PasswordFragment : Fragment() {
             viewModel.handlePassword(it)
         }
         binding.frPwdNextBtn.setOnClickListener {
-            Assignment2.preferences.setPassword(viewModel.uistate.value!!.input!!)
+            viewModel.onClickNext()
             findNavController().navigate(R.id.action_passwordFragment_to_resultFragment)
         }
         binding.frPwdToolbar.toolbarBackBtn.setOnClickListener {
