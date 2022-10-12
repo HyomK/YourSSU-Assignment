@@ -65,7 +65,6 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
     }
 
     private fun handlePhoneChanged(text: Editable?) {
-        Log.e("handle",RegexConstant.PHONE_REGEX.matches(text.toString()).toString())
         _uiState.update { it.copy(phone = text.toString()) }
     }
 
