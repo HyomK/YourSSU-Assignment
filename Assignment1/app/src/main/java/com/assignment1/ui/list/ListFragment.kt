@@ -1,13 +1,12 @@
 package com.assignment1.ui.list
 
+import android.graphics.Canvas
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -15,13 +14,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.assignment1.MainActivity
 import com.assignment1.R
 import com.assignment1.data.database.User
 import com.assignment1.databinding.FragmentListBinding
-import com.assignment1.ui.list.adapter.ItemDecoration
+import com.assignment1.ui.list.adapter.ListAdapter
 import com.assignment1.ui.list.adapter.SwipeHelperCallback
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -30,8 +29,8 @@ class ListFragment : Fragment(){
 
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<ListViewModel>()
-    private var userAdapter : ListAdapter ? = null
+    private val viewModel by activityViewModels<ListViewModel>()
+    private var userAdapter : ListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +63,11 @@ class ListFragment : Fragment(){
                 swipeHelperCallback.removePreviousClamp(this)
                 false
             }
-            addItemDecoration(ItemDecoration())
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                    swipeHelperCallback.onDraw()
+                }
+            })
         }
     }
 
@@ -78,7 +81,7 @@ class ListFragment : Fragment(){
 
         viewModel.getUserList().observe(viewLifecycleOwner, Observer {
             it?.let{
-                userAdapter?.submitList(it)
+                    userAdapter?.submitList(it)
             }
         })
     }

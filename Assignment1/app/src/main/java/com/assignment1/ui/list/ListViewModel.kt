@@ -17,7 +17,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
 
     private var repository: UserRepository
 
-    private val _uiState = MutableStateFlow(ListUiState(onSearchChanged = ::handleSearchChanged))
+    val _uiState = MutableStateFlow(ListUiState(onSearchChanged = ::handleSearchChanged))
     val uiState get() = _uiState.asStateFlow()
 
     init {

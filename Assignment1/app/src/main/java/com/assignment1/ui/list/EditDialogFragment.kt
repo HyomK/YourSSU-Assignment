@@ -25,6 +25,7 @@ import com.assignment1.databinding.FragmentListBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 
 class EditDialogFragment : DialogFragment() {
 
@@ -33,6 +34,7 @@ class EditDialogFragment : DialogFragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<EditDialogViewModel>()
+    private val listViewModel by activityViewModels<ListViewModel>()
 
     override fun onResume() {
         super.onResume()
@@ -77,6 +79,7 @@ class EditDialogFragment : DialogFragment() {
         }
         binding.frEditPositiveBtn.setOnClickListener {
             viewModel.updateUser()
+            listViewModel._uiState.update { it.copy(search = viewModel.uiState.value.name ) }
             Toast.makeText( (activity as MainActivity),"수정되었습니다.", Toast.LENGTH_SHORT).show()
             dialog?.dismiss()
         }
