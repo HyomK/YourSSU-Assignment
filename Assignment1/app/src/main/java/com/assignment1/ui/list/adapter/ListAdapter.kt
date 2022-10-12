@@ -1,4 +1,4 @@
-package com.assignment1.ui.list
+package com.assignment1.ui.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 class ListAdapter(
     val onClickDelete:(user: User)-> Unit,
     val onClickEdit:(user: User)-> Unit
-    ): ListAdapter<User,com.assignment1.ui.list.ListAdapter.ViewHolder>(UserDiffCallback()){
+    ): ListAdapter<User,com.assignment1.ui.list.adapter.ListAdapter.ViewHolder>(UserDiffCallback()){
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item,position)

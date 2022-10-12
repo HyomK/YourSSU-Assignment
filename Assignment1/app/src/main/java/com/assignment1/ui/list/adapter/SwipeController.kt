@@ -7,17 +7,23 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior.getTag
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
-import com.assignment1.ui.list.ListAdapter
+import com.assignment1.ui.list.adapter.ListAdapter
 import java.lang.Math.max
 import java.lang.Math.min
 
 
-class SwipeHelperCallback : ItemTouchHelper.Callback() {
+class SwipeHelperCallback(): ItemTouchHelper.Callback() {
 
-    private var currentPosition: Int? = null
-    private var previousPosition: Int? = null
     private var currentDx = 0f
     private var clamp = 0f
+    private var currentViewHolder : ListAdapter.ViewHolder? = null
+    private var prevViewHolder : ListAdapter.ViewHolder? = null
+
+    fun onDraw(){
+        prevViewHolder?.let{
+           if(it != currentViewHolder ) getView(it).translationX = 0f
+        }
+    }
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,
@@ -40,12 +46,12 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         currentDx = 0f
         getDefaultUIUtil().clearView(getView(viewHolder))
-        previousPosition = viewHolder.itemViewType
+        prevViewHolder = viewHolder as ListAdapter.ViewHolder?
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         viewHolder?.let {
-            currentPosition = viewHolder.itemViewType
+            currentViewHolder = viewHolder as ListAdapter.ViewHolder?
             getDefaultUIUtil().onSelected(getView(it))
         }
     }
@@ -56,7 +62,6 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
 
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
         val isClamped = getTag(viewHolder)
-        // 현재 View가 고정되어있지 않고 사용자가 -clamp 이상 swipe시 isClamped true로 변경 아닐시 false로 변경
         setTag(viewHolder, !isClamped && currentDx <= -clamp)
         return 2f
     }
@@ -129,16 +134,15 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
     }
 
     fun removePreviousClamp(recyclerView: RecyclerView) {
-        if (currentPosition == previousPosition ){
+        if ( currentViewHolder == prevViewHolder ){
             return
         }
 
-        previousPosition?.let {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(it) ?: return
-            getView(viewHolder).translationX = 0f
-            setTag(viewHolder, false)
-            previousPosition = null
+        prevViewHolder?.let {
+            getView(it).translationX = 0f
+            setTag(it, false)
         }
+        prevViewHolder = null
     }
 
 }
